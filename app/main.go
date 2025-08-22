@@ -66,7 +66,7 @@ func positiveCharacterGroups(line []byte, pattern string) bool {
 
 func negativeCharacterGroups(line []byte, pattern string) bool {
 	pattern = pattern[2 : len(pattern)-1]
-	return bytes.ContainsAny(line, pattern)
+	return !bytes.ContainsAny(line, pattern)
 }
 
 func matchLine(line []byte, pattern string) (bool, error) {
@@ -80,7 +80,7 @@ func matchLine(line []byte, pattern string) (bool, error) {
 
 	if pattern[0] == '[' && pattern[len(pattern)-1] == ']' {
 		if pattern[1] == '^' {
-			return !negativeCharacterGroups(line, pattern), nil
+			return negativeCharacterGroups(line, pattern), nil
 		}
 
 		return positiveCharacterGroups(line, pattern), nil
