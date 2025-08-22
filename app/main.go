@@ -58,13 +58,24 @@ func matchWordCharacters(line []byte) bool {
 	return false
 }
 
+func positiveCharacterGroups(line []byte, pattern string) bool {
+	pattern = pattern[1 : len(pattern)-1]
+
+	return bytes.ContainsAny(line, pattern)
+}
+
 func matchLine(line []byte, pattern string) (bool, error) {
+
 	if pattern == "\\d" {
 		return matchDigits(line), nil
 	}
 
 	if pattern == "\\w" {
 		return matchWordCharacters(line), nil
+	}
+
+	if pattern[0] == '[' && pattern[len(pattern)-1] == ']' {
+		return positiveCharacterGroups(line, pattern), nil
 	}
 
 	if utf8.RuneCountInString(pattern) != 1 {
