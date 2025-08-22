@@ -49,9 +49,22 @@ func matchDigits(line []byte) bool {
 	return false
 }
 
+func matchWordCharacters(line []byte) bool {
+	for _, char := range line {
+		if char >= 'A' && char <= 'Z' || char >= 'a' && char <= 'z' || char >= '0' && char <= '9' || char == '_' {
+			return true
+		}
+	}
+	return false
+}
+
 func matchLine(line []byte, pattern string) (bool, error) {
 	if pattern == "\\d" {
 		return matchDigits(line), nil
+	}
+
+	if pattern == "\\w" {
+		return matchWordCharacters(line), nil
 	}
 
 	if utf8.RuneCountInString(pattern) != 1 {
