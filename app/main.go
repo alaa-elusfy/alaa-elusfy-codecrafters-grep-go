@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 	"unicode/utf8"
 )
 
@@ -66,7 +67,14 @@ func positiveCharacterGroups(line []byte, pattern string) bool {
 
 func negativeCharacterGroups(line []byte, pattern string) bool {
 	pattern = pattern[2 : len(pattern)-1]
-	return !bytes.ContainsAny(line, pattern)
+
+	for _, char := range line {
+		if strings.IndexByte(pattern, char) == -1 {
+			return true
+		}
+	}
+
+	return false
 }
 
 func matchLine(line []byte, pattern string) (bool, error) {
