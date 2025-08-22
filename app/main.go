@@ -45,9 +45,10 @@ func matchLine(line []byte, pattern string) (bool, error) {
 		for _, char := range line {
 			switch char {
 			case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
-				return false, nil
+				return true, nil
 			}
 		}
+		return false, nil
 	}
 
 	if utf8.RuneCountInString(pattern) != 1 {
