@@ -53,6 +53,7 @@ func matchDigitCharacterClass(line []byte, pattern string) bool {
 
 func matchLine(line []byte, pattern string) (bool, error) {
 	if utf8.RuneCountInString(pattern) != 1 {
+		fmt.Println("++++++++++++++++++++++++++++++++", pattern)
 		return false, fmt.Errorf("unsupported pattern: %q", pattern)
 	}
 
