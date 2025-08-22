@@ -39,16 +39,19 @@ func main() {
 	// default exit code is 0 which means success
 }
 
-func matchLine(line []byte, pattern string) (bool, error) {
-
-	if pattern == "\\d" {
-		for _, char := range line {
-			switch char {
-			case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
-				return true, nil
-			}
+func matchDigits(line []byte) bool {
+	for _, char := range line {
+		switch char {
+		case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
+			return true
 		}
-		return false, nil
+	}
+	return false
+}
+
+func matchLine(line []byte, pattern string) (bool, error) {
+	if pattern == "\\d" {
+		return matchDigits(line), nil
 	}
 
 	if utf8.RuneCountInString(pattern) != 1 {
