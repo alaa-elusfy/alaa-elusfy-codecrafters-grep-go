@@ -40,9 +40,16 @@ func main() {
 }
 
 func matchLine(line []byte, pattern string) (bool, error) {
+
 	if pattern == "\\d" {
-		return bytes.ContainsAny(line, "1234567890"), nil
+		for _, char := range line {
+			switch char {
+			case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
+				return false, nil
+			}
+		}
 	}
+
 	if utf8.RuneCountInString(pattern) != 1 {
 		return false, fmt.Errorf("unsupported pattern: %q", pattern)
 	}
