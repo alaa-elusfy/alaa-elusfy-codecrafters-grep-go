@@ -80,7 +80,7 @@ func matchLine(line []byte, pattern string) (bool, error) {
 
 	if pattern[0] == '[' && pattern[len(pattern)-1] == ']' {
 		if pattern[1] == '^' {
-			return negativeCharacterGroups(line, pattern), nil
+			return !negativeCharacterGroups(line, pattern), nil
 		}
 
 		return positiveCharacterGroups(line, pattern), nil
