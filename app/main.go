@@ -39,21 +39,16 @@ func main() {
 	// default exit code is 0 which means success
 }
 
-func matchDigitCharacterClass(line []byte, pattern string) bool {
+func matchLine(line []byte, pattern string) (bool, error) {
+
 	if pattern == "\\d" {
 		for _, char := range line {
 			switch char {
 			case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
-				return true
+				return true, nil
 			}
 		}
 	}
-	return false
-}
-
-func matchLine(line []byte, pattern string) (bool, error) {
-
-	return matchDigitCharacterClass(line, pattern), nil
 
 	if utf8.RuneCountInString(pattern) != 1 {
 		return false, fmt.Errorf("unsupported pattern: %q", pattern)
